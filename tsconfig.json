@@ -19,9 +19,8 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@/*": ["src/*"],
-      "config": ["src/config.ts"],
 
-      "@util/*": ["src/util/*"]
+      "@util/*": ["util/*"]
     }
   }
 }
