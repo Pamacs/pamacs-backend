@@ -1,8 +1,11 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import Config from 'config';
+import { AppModule } from './pamacs.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
+	const pamacs = await NestFactory.create(AppModule);
+	await pamacs.listen(Config.backendPort);
 }
-bootstrap();
+bootstrap().catch(() => {
+	
+});
