@@ -1,5 +1,15 @@
 {
     "response": {
-        "success": "OPERATION_SUCCESSFUL"
+        "success": "OPERATION_SUCCESSFUL",
+        "validation_error": "MALFORMED_INPUT",
+        "auth": {
+            "register": {
+                "success": "REGISTRATION_SUCCESSFUL"
+            },
+            "login": {
+                "success": "LOGGED_IN",
+                "credential_error": "CREDENTIAL_ERROR"
+            }
+        }
     }
 }

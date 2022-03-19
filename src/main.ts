@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import Config from '@/config';
 import { AppModule } from './pamacs.module';
 import Logger from './util/Logger';
+import 'dotenv/config';
 
 async function bootstrap() {
 	Logger.info("Starting backend");

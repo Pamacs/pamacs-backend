@@ -20,6 +20,7 @@
     "resolveJsonModule": true,
     "paths": {
       "@/*": ["src/*"],
+      "messages": ["src/messages.json"],
 
       "@util/*": ["util/*"]
     }
