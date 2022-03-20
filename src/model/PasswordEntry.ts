@@ -11,7 +11,7 @@ export class PasswordEntry {
     @Prop() password: string;    // only accepts base16 (hex) encoded strings
     @Prop() append_date: number;
     @Prop() note?: string;
-    @Prop() client_id: string;          // used for dealing with compatibility issues over clients
+    @Prop() client_id: string;          // used for dealing with compatibility issues over clients (because security depends on the client, not on the backend)
 }
 
 export const PasswordEntrySchema = SchemaFactory.createForClass(PasswordEntry);

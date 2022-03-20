@@ -10,6 +10,16 @@
                 "success": "LOGGED_IN",
                 "credential_error": "CREDENTIAL_ERROR"
             }
+        },
+        "containers": {
+            "create": {
+                "success": "CONTAINER_CREATED",
+                "too_many_containers_error": "TOO_MANY_CONTAINERS"
+            },
+            "delete": {
+                "success": "CONTAINER_DELETED",
+                "contaier_not_found_error": "CONTAINER_NOT_FOUND"
+            }
         }
     }
 }
