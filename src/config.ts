@@ -8,7 +8,16 @@ export default class Config {
     static hookKey = "test"
 
 
-    static useridLength = 32;
-    static recoveryKeyLength = 24;
+    static lengths = {
+        user_id: 32,
+        recovery_key: 24,
+        container_id: 32
+    }
 
+    static limits = {
+        user_limit: null, // not implemented yet
+        user_container_limit: 6,
+        container_entry_limit: 32,
+        entry_password_length_limit: 1024
+    }
 }

@@ -18,12 +18,12 @@ export class AuthService {
     constructor(
         @InjectModel("users") private userModel: Model<UserDocuemnt>,
         private JwtService: JwtService
-        ) {}
+    ) {}
 
     async register(data: {password: string, register_key?: string}): Promise<ApiResponse> {
         
-        const generatedUserID = generateString(CharSets.SLETTERS_BLETTERS_NUMBERS, Config.useridLength);
-        const recovery_key = generateString(CharSets.SLETTERS_BLETTERS_NUMBERS, Config.recoveryKeyLength);
+        const generatedUserID = generateString(CharSets.SLETTERS_BLETTERS_NUMBERS, Config.lengths.user_id);
+        const recovery_key = generateString(CharSets.SLETTERS_BLETTERS_NUMBERS, Config.lengths.recovery_key);
 
         const newUser = new this.userModel({
             user_id: generatedUserID,
