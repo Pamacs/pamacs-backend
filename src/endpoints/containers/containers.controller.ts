@@ -6,7 +6,7 @@ import { loginValidator } from '../auth/auth.validator';
 export class ContainersController {
 
     @Post('create_container')
-    @Validator(loginValidator)
+    //@Validator()
     async createContainer() {
         console.log('balls')
     }

@@ -5,6 +5,7 @@ import { loginValidator, registerValidator } from './auth.validator';
 import * as messages from "messages";
 import { JwtAuthGuard } from './jwt/jwt-auth.guard';
 import { getIpFromRequest } from '@/util/security/GetIpFromReq';
+import { Validator } from '@/util/decorators/Validator.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -12,18 +13,17 @@ export class AuthController {
     constructor( private readonly authService: AuthService ) {}
 
     @Post('register')
+    @Validator(registerValidator)
     async register(@Body() body): Promise<ApiResponse> {
-        let { error } = registerValidator(body);
-        if ( error ) return new ApiResponse(ResponseType.ERROR, messages.response.validation_error);
 
         return await this.authService.register(body);
     }
 
     //TODO: make a decorator for validation beause it's hot
+    // already done and it looks so amazing >w<
     @Post('login')
+    @Validator(loginValidator)
     async login(@Request() req, @Body() body): Promise<ApiResponse> {
-        let { error } = loginValidator(body);
-        if ( error ) return new ApiResponse(ResponseType.ERROR, messages.response.validation_error);
 
         let ip = getIpFromRequest(req);
         return await this.authService.login(body, ip);
