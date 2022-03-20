@@ -11,6 +11,7 @@ export class PasswordContainer {
     @Prop() owner_id: string;
     @Prop() id: string;
     @Prop() passwords: Array<PasswordEntry>;
+    @Prop() note: string;
 }
 
 export const PasswordContainerSchema = SchemaFactory.createForClass(PasswordContainer);
