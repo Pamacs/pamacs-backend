@@ -8,7 +8,7 @@ export class PasswordEntry {
 
     @Prop() name: string;               // Could be a website, client could detect it by url
     @Prop() id: string;
-    @Prop() password: Array<object>;    // only accepts base16 (hex) encoded strings
+    @Prop() password: string;    // only accepts base16 (hex) encoded strings
     @Prop() append_date: number;
     @Prop() note?: string;
     @Prop() client_id: string;          // used for dealing with compatibility issues over clients

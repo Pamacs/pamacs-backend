@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose"
 import { Document } from 'mongoose';
+import { PasswordEntry } from "./PasswordEntry";
 
 export type PasswordContainerDocument = PasswordContainer & Document;
 
@@ -9,7 +10,7 @@ export class PasswordContainer {
     @Prop() name: string;
     @Prop() owner_id: string;
     @Prop() id: string;
-    @Prop() passwords: Array<object>;
+    @Prop() passwords: Array<PasswordEntry>;
 }
 
 export const PasswordContainerSchema = SchemaFactory.createForClass(PasswordContainer);
