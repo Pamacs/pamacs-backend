@@ -13,6 +13,8 @@ export class ValidationGuard implements CanActivate {
         const body = context.switchToHttp().getRequest<Request>().body;
         const validatorFunction = this.reflector.get<Function>('validatorFunction', context.getHandler());
 
+        if (!validatorFunction) return true;
+
         // Executes the validator we get from parameters
         const { error } = validatorFunction(body);
 
