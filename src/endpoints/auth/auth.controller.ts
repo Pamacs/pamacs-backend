@@ -29,10 +29,10 @@ export class AuthController {
         return await this.authService.login(body, ip);
     }
 
-    @Get('r')
+    /*@Get('debug/return_signed_user')
     @UseGuards(JwtAuthGuard)
     async returnSignedUser(@Request() req) {
         return req.user;
-    }
+    }*/
 
 }
