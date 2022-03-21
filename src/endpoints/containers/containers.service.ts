@@ -36,11 +36,11 @@ export class ContainersService {
         const generatedContainerID = generateString(CharSets.SLETTERS_BLETTERS_NUMBERS, Config.lengths.container_id);
 
         const dbContainer = new this.containerModel({
-            name: data.name,
+            name: data.name ? data.name : undefined,
             owner_id: user.user_id,
             id: generatedContainerID,
             passwords: [],
-            note: data.note
+            note: data.note ? data.note : undefined
         });
         await dbContainer.save();
 
@@ -72,7 +72,7 @@ export class ContainersService {
         }
 
         Object.keys(data).forEach(e => {
-            dbContainer[e] = data[e];
+            dbContainer[e] = data[e] ? data[e] : undefined;
         });
 
         await dbContainer.save();
