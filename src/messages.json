@@ -19,6 +19,9 @@
             "delete": {
                 "success": "CONTAINER_DELETED",
                 "contaier_not_found_error": "CONTAINER_NOT_FOUND"
+            },
+            "edit": {
+                "success": "CONTAINER_EDITED"
             }
         }
     }

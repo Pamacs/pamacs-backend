@@ -54,5 +54,22 @@ export class ContainersService {
 
         return new ApiResponse(ResponseType.SUCCESS, messages.response.containers.delete.success);
     }
+
+    async editContainer(data: {name: string, note: string}, id: string, user: SignedUser): Promise<ApiResponse> {
+        const dbContainer = await this.containerModel.findOne({owner_id: user.user_id, id: id});
+
+        switch (true) {
+            case !dbContainer:
+                return new ApiResponse(ResponseType.ERROR, messages.response.containers.delete.contaier_not_found_error);
+        }
+
+        Object.keys(dbContainer).forEach(e => {
+            if (data[e] != undefined) dbContainer[e] = data[e];
+        });
+
+        await dbContainer.save();
+
+        return new ApiResponse(ResponseType.SUCCESS, messages.response.containers.edit.success);
+    }
     
 }
