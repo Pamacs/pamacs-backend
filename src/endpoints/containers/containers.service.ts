@@ -16,6 +16,14 @@ export class ContainersService {
         @InjectModel("containers") private containerModel: Model<PasswordContainerDocument>,
     ) {}
 
+    async getContainers(user: SignedUser) {
+        return new ApiResponse(ResponseType.SUCCESS, messages.response.containers.get.success, {
+
+            // Returning all user owned containers with the _id and __v fields removed
+            containers: await this.containerModel.find({owner_id: user.user_id}, '-_id -__v')
+        })
+    }
+
     async createContainer(data: {name: string, note: string}, user: SignedUser): Promise<ApiResponse> {
 
         const userOwnedContainers = await this.containerModel.find({owner_id: user.user_id});
@@ -63,8 +71,8 @@ export class ContainersService {
                 return new ApiResponse(ResponseType.ERROR, messages.response.containers.delete.contaier_not_found_error);
         }
 
-        Object.keys(dbContainer).forEach(e => {
-            if (data[e] != undefined) dbContainer[e] = data[e];
+        Object.keys(data).forEach(e => {
+            dbContainer[e] = data[e];
         });
 
         await dbContainer.save();

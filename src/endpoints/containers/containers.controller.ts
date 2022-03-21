@@ -1,5 +1,5 @@
 import { Validator } from '@/util/decorators/Validator.decorator';
-import { Body, Controller, Delete, Param, Patch, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Request, UseGuards } from '@nestjs/common';
 import { loginValidator } from '../auth/auth.validator';
 import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard';
 import { ContainersService } from './containers.service';
@@ -9,6 +9,13 @@ import { containerCreationAndOperationValidator } from './containers.validator';
 export class ContainersController {
 
     constructor( private readonly containerService: ContainersService ) {}
+
+    @Get('get_containers')
+    @UseGuards(JwtAuthGuard)
+    async getContainers(@Request() req) {
+        return await this.containerService.getContainers(req.user);
+    }
+
 
     @Post('create_container')
     @UseGuards(JwtAuthGuard)

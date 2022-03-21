@@ -12,6 +12,9 @@
             }
         },
         "containers": {
+            "get": {
+                "success": "GOT_CONTAINERS"
+            },
             "create": {
                 "success": "CONTAINER_CREATED",
                 "too_many_containers_error": "TOO_MANY_CONTAINERS"
