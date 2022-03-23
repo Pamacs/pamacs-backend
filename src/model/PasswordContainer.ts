@@ -10,7 +10,7 @@ export class PasswordContainer {
     @Prop() name: string;
     @Prop() owner_id: string;
     @Prop() id: string;
-    @Prop() passwords: Array<PasswordEntry>;
+    @Prop() passwords: string[]; // Storing password object id-s
     @Prop() note: string;
 }
 

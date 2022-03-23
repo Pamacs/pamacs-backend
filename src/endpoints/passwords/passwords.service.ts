@@ -8,7 +8,7 @@ import { Model } from 'mongoose';
 import * as messages from 'messages';
 import Config from '@/config';
 import { generateString } from '@/util/security/StringGenUtil';
-import { CharSets } from '@/util/security/CharSets';
+import { CharSets, consistsOnlyOf } from '@/util/security/CharSets';
 
 @Injectable()
 export class PasswordsService {
@@ -39,6 +39,12 @@ export class PasswordsService {
 
         const dbContainer = await this.containerModel.findOne({owner_id: user.user_id, id: id});
         const containerPasswords = await this.passwordModel.find<PasswordEntry>({container_id: id}, '-_id -__v');
+        let invalidPasswords: number[] = []; // Passwords that are not encrypted ones
+
+        // Linear, sync check because we need indexes
+        for (let i in data) {
+            if (!consistsOnlyOf(CharSets.HEX, data[i].password)) invalidPasswords.push(parseInt(i));
+        }
 
         switch (true) {
 
@@ -47,13 +53,20 @@ export class PasswordsService {
 
             case containerPasswords.length + data.length > Config.limits.container_entry_limit:
                 return new ApiResponse(ResponseType.ERROR, messages.response.passwords.add.too_many_passwords_error);
+
+            case invalidPasswords.length > 0:
+                return new ApiResponse(ResponseType.ERROR, messages.response.passwords.all.passwords_not_encrypted_error, {
+                    indexes: invalidPasswords
+                })
         }
 
         await data.forEach(async d => {
 
+            let generatedID = generateString(CharSets.SLETTERS_BLETTERS_NUMBERS, Config.lengths.password_id);
+
             let dbObj = new this.passwordModel({
                 name: d.name,
-                id: generateString(CharSets.SLETTERS_BLETTERS_NUMBERS, Config.lengths.password_id),
+                id: generatedID,
                 login_name: d.login_name,
                 password: d.password,
                 append_date: Math.floor(new Date().valueOf() / 1000),
@@ -62,8 +75,10 @@ export class PasswordsService {
                 client_id: d.client_id
             })
 
+            dbContainer.passwords.push(generatedID);
             await dbObj.save();
-        })
+        });
+        await dbContainer.save();
 
         return new ApiResponse(ResponseType.SUCCESS, messages.response.passwords.add.success);
     }

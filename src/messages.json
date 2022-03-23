@@ -30,6 +30,9 @@
             }
         },
         "passwords": {
+            "all": {
+                "passwords_not_encrypted_error": "PASSWORDS_NOT_ENCRYPTED"
+            },
             "get": {
                 "success": "GOT_PASSWORDS"
             },
