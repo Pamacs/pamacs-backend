@@ -55,7 +55,7 @@ export class ContainersService {
 
         switch (true) {
             case !dbContainer:
-                return new ApiResponse(ResponseType.ERROR, messages.response.containers.delete.contaier_not_found_error);
+                return new ApiResponse(ResponseType.ERROR, messages.response.containers.all.contaier_not_found_error);
         }
 
         await dbContainer.deleteOne();
@@ -64,11 +64,12 @@ export class ContainersService {
     }
 
     async editContainer(data: {name: string, note: string}, id: string, user: SignedUser): Promise<ApiResponse> {
+        
         const dbContainer = await this.containerModel.findOne({owner_id: user.user_id, id: id});
 
         switch (true) {
             case !dbContainer:
-                return new ApiResponse(ResponseType.ERROR, messages.response.containers.delete.contaier_not_found_error);
+                return new ApiResponse(ResponseType.ERROR, messages.response.containers.all.contaier_not_found_error);
         }
 
         Object.keys(data).forEach(e => {

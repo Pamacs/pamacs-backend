@@ -12,6 +12,9 @@
             }
         },
         "containers": {
+            "all": {
+                "contaier_not_found_error": "CONTAINER_NOT_FOUND"
+            },
             "get": {
                 "success": "GOT_CONTAINERS"
             },
@@ -20,11 +23,19 @@
                 "too_many_containers_error": "TOO_MANY_CONTAINERS"
             },
             "delete": {
-                "success": "CONTAINER_DELETED",
-                "contaier_not_found_error": "CONTAINER_NOT_FOUND"
+                "success": "CONTAINER_DELETED"
             },
             "edit": {
                 "success": "CONTAINER_EDITED"
+            }
+        },
+        "passwords": {
+            "get": {
+                "success": "GOT_PASSWORDS"
+            },
+            "add": {
+                "success": "PASSWORDS_ADDED",
+                "too_many_passwords_error": "TOO_MANY_PASSWORDS"
             }
         }
     }

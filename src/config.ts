@@ -11,7 +11,8 @@ export default class Config {
     static lengths = {
         user_id: 32,
         recovery_key: 24,
-        container_id: 32
+        container_id: 32,
+        password_id: 24
     }
 
     static limits = {
