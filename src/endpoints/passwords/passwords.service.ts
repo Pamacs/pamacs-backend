@@ -51,7 +51,6 @@ export class PasswordsService {
 
         await data.forEach(async d => {
 
-            console.log("XD")
             let dbObj = new this.passwordModel({
                 name: d.name,
                 id: generateString(CharSets.SLETTERS_BLETTERS_NUMBERS, Config.lengths.password_id),
