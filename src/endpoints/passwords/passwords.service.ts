@@ -1,5 +1,5 @@
 import { ApiResponse, ResponseType } from '@/model/ApiResponse';
-import { PasswordContainerDocument } from '@/model/PasswordContainer';
+import { PasswordContainerDocument, PasswordContainer } from '@/model/PasswordContainer';
 import { PasswordEntry, PasswordEntryDocument } from '@/model/PasswordEntry';
 import { SignedUser } from '@/model/SignedUser';
 import { Injectable } from '@nestjs/common';
@@ -101,6 +101,7 @@ export class PasswordsService {
         }
 
         switch (true) {
+
             case foundDbPwObject == undefined:
                 return new ApiResponse(ResponseType.ERROR, messages.response.passwords.all.password_not_found_error);
             
@@ -114,6 +115,37 @@ export class PasswordsService {
 
         await foundDbPwObject.save();
         return new ApiResponse(ResponseType.SUCCESS, messages.response.passwords.edit.success);
+    }
+
+    async deletePassword(id: string, user: SignedUser) {
+
+        // already explained these in editpw blah blah blah
+        const allUserOwnedContainers = await this.containerModel.find({owner_id: user.user_id});
+
+        let foundDbContainer: PasswordContainerDocument = undefined;
+        let foundDbPwObject: PasswordEntryDocument = undefined;
+        
+        for (let dbContainer of allUserOwnedContainers) {
+
+            if (dbContainer.passwords.includes(id)) {
+                foundDbContainer = dbContainer;
+                foundDbPwObject = await this.passwordModel.findOne({id: id});
+            }
+        }
+
+        switch (true) {
+
+            case foundDbPwObject == undefined:
+                return new ApiResponse(ResponseType.ERROR, messages.response.passwords.all.password_not_found_error);
+        
+        }
+
+        foundDbContainer.passwords = foundDbContainer.passwords.filter(x => x != id);
+
+        await foundDbContainer.save();
+        await foundDbPwObject.deleteOne();
+        
+        return new ApiResponse(ResponseType.SUCCESS, messages.response.passwords.delete.success);
     }
 
 }

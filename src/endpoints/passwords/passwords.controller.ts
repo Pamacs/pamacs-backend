@@ -1,5 +1,5 @@
 import { Validator } from '@/util/decorators/Validator.decorator';
-import { Body, Controller, Get, Param, Patch, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Request, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard';
 import { PasswordsService } from './passwords.service';
 import { passwordAddValidator, passwordEditValidator } from './passwords.validator';
@@ -29,5 +29,10 @@ export class PasswordsController {
         return await this.passwordService.editPassword(body, password_id, req.user);
     }
 
+    @Delete('delete_password/:password_id')
+    @UseGuards(JwtAuthGuard)
+    async deletePassword(@Request() req, @Param('password_id') password_id) {
+        return await this.passwordService.deletePassword(password_id, req.user);
+    }
 
 }
