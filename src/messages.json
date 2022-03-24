@@ -22,11 +22,11 @@
                 "success": "CONTAINER_CREATED",
                 "too_many_containers_error": "TOO_MANY_CONTAINERS"
             },
-            "delete": {
-                "success": "CONTAINER_DELETED"
-            },
             "edit": {
                 "success": "CONTAINER_EDITED"
+            },
+            "delete": {
+                "success": "CONTAINER_DELETED"
             }
         },
         "passwords": {
@@ -40,6 +40,12 @@
             "add": {
                 "success": "PASSWORDS_ADDED",
                 "too_many_passwords_error": "TOO_MANY_PASSWORDS"
+            },
+            "edit": {
+                "success": "PASSWORD_OBJECT_EDITED"
+            },
+            "delete": {
+                "success": "PASSWORD_OBJECT_DELETED"
             }
         }
     }

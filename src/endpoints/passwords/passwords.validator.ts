@@ -13,3 +13,7 @@ export function passwordAddValidator(data: object) {
 
     return schema.validate(data);
 }
+
+export function passwordEditValidator(data: object) {
+    return passwordSchema.validate(data);
+}

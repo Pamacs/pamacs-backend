@@ -89,22 +89,22 @@ export class PasswordsService {
         // Getting all user owned containers
         const allUserOwnedContainers = await this.containerModel.find({owner_id: user.user_id});
         // Making an undefined object for late assignment
-        let foundDbPwObject: PasswordEntry = undefined;
+        let foundDbPwObject: PasswordEntryDocument = undefined;
         
         // Looping through all user owned containers
         for (let dbContainer of allUserOwnedContainers) {
             // Checking if the user owns the password with the defined id
             if (dbContainer.passwords.includes(id)) {
-                foundDbPwObject = await this.passwordModel.findOne<PasswordEntry>({id: id});
+                foundDbPwObject = await this.passwordModel.findOne({id: id});
             }
-            // ^^ if they do, assign it to the object with resolving the promise
+            // ^^ if they do, assign it to the object
         }
 
         switch (true) {
             case foundDbPwObject == undefined:
                 return new ApiResponse(ResponseType.ERROR, messages.response.passwords.all.password_not_found_error);
             
-            case !consistsOnlyOf(CharSets.HEX, foundDbPwObject.password):
+            case data.password && !consistsOnlyOf(CharSets.HEX, data.password):
                 return new ApiResponse(ResponseType.ERROR, messages.response.passwords.all.passwords_not_encrypted_error);
         }
 
@@ -112,8 +112,8 @@ export class PasswordsService {
             foundDbPwObject[e] = data[e] ? data[e] : undefined;
         });
 
-        console.log(foundDbPwObject)
-
+        await foundDbPwObject.save();
+        return new ApiResponse(ResponseType.SUCCESS, messages.response.passwords.edit.success);
     }
 
 }

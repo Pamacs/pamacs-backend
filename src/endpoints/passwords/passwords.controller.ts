@@ -2,7 +2,7 @@ import { Validator } from '@/util/decorators/Validator.decorator';
 import { Body, Controller, Get, Param, Patch, Post, Request, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard';
 import { PasswordsService } from './passwords.service';
-import { passwordAddValidator } from './passwords.validator';
+import { passwordAddValidator, passwordEditValidator } from './passwords.validator';
 
 @Controller('passwords')
 export class PasswordsController {
@@ -24,7 +24,7 @@ export class PasswordsController {
 
     @Patch('edit_password/:password_id')
     @UseGuards(JwtAuthGuard)
-    @Validator(passwordAddValidator)
+    @Validator(passwordEditValidator)
     async editPasswords(@Request() req, @Body() body, @Param('password_id') password_id) {
         return await this.passwordService.editPassword(body, password_id, req.user);
     }
